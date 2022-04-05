@@ -954,7 +954,7 @@ void A_FireCGun(player_t *player, pspdef_t *psp)
 
   P_GunShot(player->mo, !player->refire);
 
-  ApplyRecoil(&recoilOffsetX, 200000, 450000, -5000000, 5000000, 0);
+  ApplyRecoil(&recoilOffsetX, 250000, 350000, -5000000, 5000000, 0);
   ApplyRecoil(&recoilOffsetY, 25000, 50000, 50000, 75000, 1);
 }
 
