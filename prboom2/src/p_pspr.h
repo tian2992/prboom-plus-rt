@@ -105,6 +105,7 @@ int P_SwitchWeapon(struct player_s *player);
 dboolean P_CheckAmmo(struct player_s *player);
 void P_SetupPsprites(struct player_s *curplayer);
 void P_MovePsprites(struct player_s *curplayer);
+void A_ChangeGunIfNoAmmo();
 void P_DropWeapon(struct player_s *player);
 
 void A_Light0();

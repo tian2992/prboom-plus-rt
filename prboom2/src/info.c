@@ -144,7 +144,9 @@ state_t states[NUMSTATES] = {
   {SPR_SHTG,0,1,A_Raise,S_SGUNUP,0,0},  // S_SGUNUP
   {SPR_SHTG,0,3,NULL,S_SGUN2,0,0},  // S_SGUN1
   {SPR_SHTG,0,7,A_FireShotgun,S_SGUN3,0,0}, // S_SGUN2
-  {SPR_SHTG,1,5,NULL,S_SGUN4,0,0},  // S_SGUN3
+  
+  //Fluffy: Changed function call from NULL to ChangeGunIfNoAmmo
+  {SPR_SHTG,1,5,A_ChangeGunIfNoAmmo,S_SGUN4,0,0},  // S_SGUN3
 
   //Fluffy: Changed function call from NULL to A_CockingShotgun to allow for weapon switching during cocking animation
   {SPR_SHTG,2,5,A_CockingShotgun,S_SGUN5,0,0},  // S_SGUN4

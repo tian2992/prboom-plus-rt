@@ -316,6 +316,16 @@ dboolean P_CheckAmmo(player_t *player)
   return false;
 }
 
+//Fluffy
+void A_ChangeGunIfNoAmmo(player_t *player, pspdef_t *psp)
+{
+  if(!P_CheckAmmo(player))
+  {
+    player->pendingweapon = P_SwitchWeapon(player);
+    P_SetPsprite(player,ps_weapon,weaponinfo[player->readyweapon].downstate);
+  }
+}
+
 //
 // P_FireWeapon.
 //
