@@ -339,6 +339,18 @@ static void P_FireWeapon(player_t *player)
 
   P_SetMobjState(player->mo, S_PLAY_ATK1);
   newstate = weaponinfo[player->readyweapon].atkstate;
+
+  //Fluffy: If we're re-firing the gun, we might choose a different starting frame so we can match original timing of attacks (since we have some weapons skip the first frame of animation to make attacks happen instantly)
+  if(player->refire)
+  {
+    if(player->readyweapon == wp_pistol)
+      newstate = S_PISTOL1;
+    else if(player->readyweapon == wp_shotgun)
+      newstate = S_SGUN1;
+    else if(player->readyweapon == wp_supershotgun)
+      newstate = S_DSGUN1;
+  }
+
   P_SetPsprite(player, ps_weapon, newstate);
   P_NoiseAlert(player->mo, player->mo);
 }

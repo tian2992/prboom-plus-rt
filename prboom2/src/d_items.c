@@ -71,7 +71,7 @@ weaponinfo_t    weaponinfo[NUMWEAPONS+2] =
     S_PISTOLUP,
     S_PISTOLDOWN,
     S_PISTOL,
-    S_PISTOL1,
+    S_PISTOL2, //Fluffy: Skip firing delay
     S_PISTOLFLASH
   },
   {
@@ -80,7 +80,7 @@ weaponinfo_t    weaponinfo[NUMWEAPONS+2] =
     S_SGUNUP,
     S_SGUNDOWN,
     S_SGUN,
-    S_SGUN1,
+    S_SGUN2, //Fluffy: Skip firing delay
     S_SGUNFLASH1
   },
   {
@@ -134,7 +134,7 @@ weaponinfo_t    weaponinfo[NUMWEAPONS+2] =
     S_DSGUNUP,
     S_DSGUNDOWN,
     S_DSGUN,
-    S_DSGUN1,
+    S_DSGUN2, //Fluffy: Skip firing delay
     S_DSGUNFLASH1
   },
 
