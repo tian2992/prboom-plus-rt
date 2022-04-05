@@ -70,6 +70,7 @@
 #endif
 
 //Fluffy
+static BOOL isShotgunCocked = 1;
 int recoilOffsetX = 0;
 int recoilOffsetY = 0;
 
@@ -323,6 +324,19 @@ void P_DropWeapon(player_t *player)
   P_SetPsprite(player, ps_weapon, weaponinfo[player->readyweapon].downstate);
 }
 
+//Fluffy
+BOOL ChangeToWeaponIfPending(player_t *player)
+{
+  if (player->pendingweapon != wp_nochange || !player->health)
+  {
+    // change weapon (pending weapon should already be validated)
+    statenum_t newstate = weaponinfo[player->readyweapon].downstate;
+    P_SetPsprite(player, ps_weapon, newstate);
+    return 1;
+  }
+  return 0;
+}
+
 //
 // A_WeaponReady
 // The player can fire the weapon
@@ -349,13 +363,8 @@ void A_WeaponReady(player_t *player, pspdef_t *psp)
   // check for change
   //  if player is dead, put the weapon away
 
-  if (player->pendingweapon != wp_nochange || !player->health)
-    {
-      // change weapon (pending weapon should already be validated)
-      statenum_t newstate = weaponinfo[player->readyweapon].downstate;
-      P_SetPsprite(player, ps_weapon, newstate);
-      return;
-    }
+  if(ChangeToWeaponIfPending(player))
+    return;
 
   // check for fire
   //  the missile launcher and bfg do not auto fire
@@ -385,6 +394,13 @@ void A_WeaponReady(player_t *player, pspdef_t *psp)
   recoilOffsetY = 0;
 }
 
+//Fluffy
+void A_CockingShotgun(player_t *player, pspdef_t *psp)
+{
+  if(ChangeToWeaponIfPending(player))
+    S_StopSound(player->mo);
+}
+
 //
 // A_ReFire
 // The player can re-fire the weapon
@@ -394,6 +410,10 @@ void A_WeaponReady(player_t *player, pspdef_t *psp)
 void A_ReFire(player_t *player, pspdef_t *psp)
 {
   CHECK_WEAPON_CODEPOINTER("A_ReFire", player);
+
+  //Fluffy
+  if(player->readyweapon == wp_shotgun)
+    isShotgunCocked = 1;
 
   // check for fire
   //  (if a weaponchange is pending, let it go through instead)
@@ -487,7 +507,14 @@ void A_Raise(player_t *player, pspdef_t *psp)
 
   newstate = weaponinfo[player->readyweapon].readystate;
 
-   P_SetPsprite(player, ps_weapon, newstate);
+  //Fluffy
+  if(player->readyweapon == wp_shotgun && isShotgunCocked == 0) //If we're swapping to a shotgun and the shotgun isn't cocked, then jump to the start of the cocking animation
+  {
+    P_SetPsprite(player, ps_weapon, S_SGUN3);
+    S_StartSound(player->mo, sfx_sgcock);
+  }
+  else
+    P_SetPsprite(player, ps_weapon, newstate);
 }
 
 
@@ -807,6 +834,9 @@ void A_FirePistol(player_t *player, pspdef_t *psp)
 void A_FireShotgun(player_t *player, pspdef_t *psp)
 {
   int i;
+
+  //Fluffy
+  isShotgunCocked = 0;
 
   CHECK_WEAPON_CODEPOINTER("A_FireShotgun", player);
 

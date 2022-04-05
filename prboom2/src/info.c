@@ -145,11 +145,14 @@ state_t states[NUMSTATES] = {
   {SPR_SHTG,0,3,NULL,S_SGUN2,0,0},  // S_SGUN1
   {SPR_SHTG,0,7,A_FireShotgun,S_SGUN3,0,0}, // S_SGUN2
   {SPR_SHTG,1,5,NULL,S_SGUN4,0,0},  // S_SGUN3
-  {SPR_SHTG,2,5,NULL,S_SGUN5,0,0},  // S_SGUN4
-  {SPR_SHTG,3,4,NULL,S_SGUN6,0,0},  // S_SGUN5
-  {SPR_SHTG,2,5,NULL,S_SGUN7,0,0},  // S_SGUN6
-  {SPR_SHTG,1,5,NULL,S_SGUN8,0,0},  // S_SGUN7
-  {SPR_SHTG,0,3,NULL,S_SGUN9,0,0},  // S_SGUN8
+
+  //Fluffy: Changed function call from NULL to A_CockingShotgun to allow for weapon switching during cocking animation
+  {SPR_SHTG,2,5,A_CockingShotgun,S_SGUN5,0,0},  // S_SGUN4
+  {SPR_SHTG,3,4,A_CockingShotgun,S_SGUN6,0,0},  // S_SGUN5
+  {SPR_SHTG,2,5,A_CockingShotgun,S_SGUN7,0,0},  // S_SGUN6
+  {SPR_SHTG,1,5,A_CockingShotgun,S_SGUN8,0,0},  // S_SGUN7
+  {SPR_SHTG,0,3,A_CockingShotgun,S_SGUN9,0,0},  // S_SGUN8
+
   {SPR_SHTG,0,7,A_ReFire,S_SGUN,0,0}, // S_SGUN9
   {SPR_SHTF,32768,4,A_Light1,S_SGUNFLASH2,0,0}, // S_SGUNFLASH1
   {SPR_SHTF,32769,3,A_Light2,S_LIGHTDONE,0,0},  // S_SGUNFLASH2

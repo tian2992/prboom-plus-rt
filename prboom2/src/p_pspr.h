@@ -109,6 +109,7 @@ void P_DropWeapon(struct player_s *player);
 
 void A_Light0();
 void A_WeaponReady();
+void A_CockingShotgun();
 void A_Lower();
 void A_Raise();
 void A_Punch();
