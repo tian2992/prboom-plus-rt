@@ -2107,7 +2107,7 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
   {   // MT_ROCKET
     -1,   // doomednum
     S_ROCKET,   // spawnstate
-    1000,   // spawnhealth
+    1,   // spawnhealth //Fluffy: Set health to 1
     S_NULL,   // seestate
     sfx_rlaunc,   // seesound
     8,    // reactiontime
@@ -2126,7 +2126,7 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
     100,    // mass
     20,   // damage
     sfx_None,   // activesound
-    MF_NOBLOCKMAP|MF_MISSILE|MF_DROPOFF|MF_NOGRAVITY,   // flags
+    /*MF_NOBLOCKMAP|*/MF_MISSILE|MF_DROPOFF|MF_NOGRAVITY|MF_SHOOTABLE|MF_NOBLOOD,   // flags //Fluffy: Altered flags so rocket is shootable
     S_NULL    // raisestate
   },
 

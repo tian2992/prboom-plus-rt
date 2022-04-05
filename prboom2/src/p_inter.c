@@ -939,6 +939,13 @@ void P_DamageMobj(mobj_t *target,mobj_t *inflictor, mobj_t *source, int damage)
   target->health -= damage;
   if (target->health <= 0)
     {
+      if(target->type == MT_ROCKET) //Fluffy: When a rocket is "killed" it should count as it entering its explosion state
+      {
+        target->flags &= ~MF_SHOOTABLE;
+        P_ExplodeMissile(target);
+        return;
+      }
+
       P_KillMobj (source, target);
       return;
     }
