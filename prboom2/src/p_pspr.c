@@ -75,6 +75,8 @@
 static BOOL isShotgunCocked = 1;
 int recoilOffsetX = 0;
 int recoilOffsetY = 0;
+static int targetRecoilOffsetX = 0;
+static int targetRecoilOffsetY = 0;
 
 extern void P_Thrust(player_t *, angle_t, fixed_t);
 
@@ -91,6 +93,21 @@ static const int recoil_values[] = {    // phares
   0,  // wp_chainsaw
   80  // wp_supershotgun
 };
+
+//Fluffy: Apply visual recoil to weapon sprite
+static void ApplyRecoil(int *targetOffset, int modMin, int modMax, int boundaryMin, int boundaryMax, int direction)
+{
+  int diff = abs(modMin - modMax);
+  int mod = modMin + (M_Random() * (diff / 255));
+  if(direction == 1 || (direction == 0 && M_Random() > 127))
+    *targetOffset += mod;
+  else
+    *targetOffset -= mod;
+  if(*targetOffset < boundaryMin)
+    *targetOffset = boundaryMin;
+  else if(*targetOffset > boundaryMax)
+    *targetOffset = boundaryMax;
+}
 
 //
 // P_SetPsprite
@@ -391,9 +408,6 @@ void A_WeaponReady(player_t *player, pspdef_t *psp)
     angle &= FINEANGLES/2-1;
     psp->sy = WEAPONTOP + FixedMul(player->bob, finesine[angle]);
   }
-
-  recoilOffsetX = 0;
-  recoilOffsetY = 0;
 }
 
 //Fluffy
@@ -517,6 +531,9 @@ void A_Raise(player_t *player, pspdef_t *psp)
   }
   else
     P_SetPsprite(player, ps_weapon, newstate);
+
+  recoilOffsetX = 0;
+  recoilOffsetY = 0;
 }
 
 
@@ -652,6 +669,9 @@ void A_Saw(player_t *player, pspdef_t *psp)
 
   player->mo->flags |= MF_JUSTATTACKED;
   R_SmoothPlaying_Reset(player); // e6y
+
+  ApplyRecoil(&recoilOffsetX, 250000, 500000, -5000000, 5000000, 0);
+  ApplyRecoil(&recoilOffsetY, 250000, 500000, -5000000, 5000000, 0);
 }
 
 //
@@ -664,6 +684,9 @@ void A_FireMissile(player_t *player, pspdef_t *psp)
 
   player->ammo[weaponinfo[player->readyweapon].ammo]--;
   P_SpawnPlayerMissile(player->mo, MT_ROCKET);
+
+  ApplyRecoil(&recoilOffsetX, 250000, 500000, -5000000, 5000000, 0);
+  ApplyRecoil(&recoilOffsetY, 500000, 750000, -5000000, 5000000, 1);
 }
 
 //
@@ -676,6 +699,9 @@ void A_FireBFG(player_t *player, pspdef_t *psp)
 
   player->ammo[weaponinfo[player->readyweapon].ammo] -= BFGCELLS;
   P_SpawnPlayerMissile(player->mo, MT_BFG);
+
+  ApplyRecoil(&recoilOffsetX, 250000, 500000, -10000000, 10000000, 0);
+  ApplyRecoil(&recoilOffsetY, 1000000, 1250000, -10000000, 10000000, 1);
 }
 
 //
@@ -756,6 +782,9 @@ void A_FirePlasma(player_t *player, pspdef_t *psp)
 
   A_FireSomething(player,P_Random(pr_plasma)&1);              // phares
   P_SpawnPlayerMissile(player->mo, MT_PLASMA);
+
+  ApplyRecoil(&recoilOffsetX, 250000, 500000, -5000000, 5000000, 0);
+  ApplyRecoil(&recoilOffsetY, 250000, 500000, -5000000, 5000000, 1);
 }
 
 //
@@ -825,8 +854,8 @@ void A_FirePistol(player_t *player, pspdef_t *psp)
   P_BulletSlope(player->mo);
   P_GunShot(player->mo, !player->refire);
 
-  recoilOffsetX = M_Random() * RECOIL;
-  recoilOffsetY = M_Random() * RECOIL;
+  ApplyRecoil(&recoilOffsetX, 100000, 250000, -5000000, 5000000, 0);
+  ApplyRecoil(&recoilOffsetY, 300000, 500000, -5000000, 5000000, 1);
 }
 
 //
@@ -854,8 +883,8 @@ void A_FireShotgun(player_t *player, pspdef_t *psp)
   for (i=0; i<7; i++)
     P_GunShot(player->mo, false);
 
-  recoilOffsetX = M_Random() * RECOIL;
-  recoilOffsetY = M_Random() * RECOIL;
+  ApplyRecoil(&recoilOffsetX, 100000, 250000, -5000000, 5000000, 0);
+  ApplyRecoil(&recoilOffsetY, 350000, 600000, 250000, 5000000, 1);
 }
 
 //
@@ -888,8 +917,8 @@ void A_FireShotgun2(player_t *player, pspdef_t *psp)
                    ((t - P_Random(pr_shotgun))<<5), damage);
     }
 
-  recoilOffsetX = M_Random() * RECOIL;
-  recoilOffsetY = M_Random() * RECOIL;
+  ApplyRecoil(&recoilOffsetX, 100000, 250000, -5000000, 5000000, 0);
+  ApplyRecoil(&recoilOffsetY, 350000, 600000, 250000, 5000000, 1);
 }
 
 //
@@ -915,8 +944,8 @@ void A_FireCGun(player_t *player, pspdef_t *psp)
 
   P_GunShot(player->mo, !player->refire);
 
-  recoilOffsetX = M_Random() * RECOIL;
-  recoilOffsetY = M_Random() * RECOIL;
+  ApplyRecoil(&recoilOffsetX, 200000, 450000, -5000000, 5000000, 0);
+  ApplyRecoil(&recoilOffsetY, 25000, 50000, 50000, 75000, 1);
 }
 
 void A_Light0(player_t *player, pspdef_t *psp)
@@ -985,9 +1014,6 @@ void A_BFGSpray(mobj_t *mo)
 
       P_DamageMobj(linetarget, mo->target, mo->target, damage);
     }
-
-  recoilOffsetX = M_Random() * RECOIL;
-  recoilOffsetY = M_Random() * RECOIL;
 }
 
 //
@@ -1036,6 +1062,33 @@ void P_MovePsprites(player_t *player)
   for (i=0; i<NUMPSPRITES; i++, psp++)
     if (psp->state && psp->tics != -1 && !--psp->tics)
       P_SetPsprite(player, i, psp->state->nextstate);
+
+  //Move gun back to default position after recoil
+#define SPEED 240000.0f
+  if(recoilOffsetX != targetRecoilOffsetX || recoilOffsetY != targetRecoilOffsetY)
+  {
+    int diffX = targetRecoilOffsetX - recoilOffsetX;
+    int diffY = targetRecoilOffsetY - recoilOffsetY;
+    float speedMod = ((float) abs(diffX) + (float) abs(diffY)) / SPEED;
+    diffX = (int) ((float) diffX / speedMod);
+    diffY = (int) ((float) diffY / speedMod);
+    if(recoilOffsetX != targetRecoilOffsetX)
+    {
+      if((diffX < 0 && recoilOffsetX + diffX < targetRecoilOffsetX)
+        || (diffX > 0 && recoilOffsetX + diffX > targetRecoilOffsetX))
+        recoilOffsetX = targetRecoilOffsetX;
+      else
+        recoilOffsetX += diffX;
+    }
+    if(recoilOffsetY != targetRecoilOffsetY)
+    {
+      if((diffY < 0 && recoilOffsetY + diffY < targetRecoilOffsetY)
+        || (diffY > 0 && recoilOffsetY + diffY > targetRecoilOffsetY))
+        recoilOffsetY = targetRecoilOffsetY;
+      else
+        recoilOffsetY += diffY;
+    }
+  }
 
   player->psprites[ps_flash].sx = player->psprites[ps_weapon].sx;
   player->psprites[ps_flash].sy = player->psprites[ps_weapon].sy;
