@@ -53,6 +53,8 @@
 #define WEAPONBOTTOM (FRACUNIT*128)
 #define WEAPONTOP    (FRACUNIT*32)
 
+#define RECOIL 10000
+
 #define BFGCELLS bfgcells        /* Ty 03/09/98 externalized in p_inter.c */
 
 // Checking correctness of input parameters for weapon codepointers
@@ -66,6 +68,10 @@
 #else
   #define CHECK_WEAPON_CODEPOINTER(codepointer, player)
 #endif
+
+//Fluffy
+int recoilOffsetX = 0;
+int recoilOffsetY = 0;
 
 extern void P_Thrust(player_t *, angle_t, fixed_t);
 
@@ -374,6 +380,9 @@ void A_WeaponReady(player_t *player, pspdef_t *psp)
     angle &= FINEANGLES/2-1;
     psp->sy = WEAPONTOP + FixedMul(player->bob, finesine[angle]);
   }
+
+  recoilOffsetX = 0;
+  recoilOffsetY = 0;
 }
 
 //
@@ -478,7 +487,7 @@ void A_Raise(player_t *player, pspdef_t *psp)
 
   newstate = weaponinfo[player->readyweapon].readystate;
 
-  P_SetPsprite(player, ps_weapon, newstate);
+   P_SetPsprite(player, ps_weapon, newstate);
 }
 
 
@@ -786,6 +795,9 @@ void A_FirePistol(player_t *player, pspdef_t *psp)
   A_FireSomething(player,0);                                      // phares
   P_BulletSlope(player->mo);
   P_GunShot(player->mo, !player->refire);
+
+  recoilOffsetX = M_Random() * RECOIL;
+  recoilOffsetY = M_Random() * RECOIL;
 }
 
 //
@@ -809,6 +821,9 @@ void A_FireShotgun(player_t *player, pspdef_t *psp)
 
   for (i=0; i<7; i++)
     P_GunShot(player->mo, false);
+
+  recoilOffsetX = M_Random() * RECOIL;
+  recoilOffsetY = M_Random() * RECOIL;
 }
 
 //
@@ -840,6 +855,9 @@ void A_FireShotgun2(player_t *player, pspdef_t *psp)
       P_LineAttack(player->mo, angle, MISSILERANGE, bulletslope +
                    ((t - P_Random(pr_shotgun))<<5), damage);
     }
+
+  recoilOffsetX = M_Random() * RECOIL;
+  recoilOffsetY = M_Random() * RECOIL;
 }
 
 //
@@ -864,6 +882,9 @@ void A_FireCGun(player_t *player, pspdef_t *psp)
   P_BulletSlope(player->mo);
 
   P_GunShot(player->mo, !player->refire);
+
+  recoilOffsetX = M_Random() * RECOIL;
+  recoilOffsetY = M_Random() * RECOIL;
 }
 
 void A_Light0(player_t *player, pspdef_t *psp)
@@ -932,6 +953,9 @@ void A_BFGSpray(mobj_t *mo)
 
       P_DamageMobj(linetarget, mo->target, mo->target, damage);
     }
+
+  recoilOffsetX = M_Random() * RECOIL;
+  recoilOffsetY = M_Random() * RECOIL;
 }
 
 //

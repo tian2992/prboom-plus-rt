@@ -1000,6 +1000,10 @@ static void R_DrawPSprite (pspdef_t *psp, int psp_index)
       }
   }
 
+  //Fluffy
+  psp_sx += recoilOffsetX;
+  psp_sy += recoilOffsetY;
+
   {
     const rpatch_t* patch = R_CachePatchNum(lump+firstspritelump);
     // calculate edges of the shape
