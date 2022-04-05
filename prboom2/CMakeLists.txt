@@ -4,6 +4,9 @@ project("PrBoom-Plus-RT"
     VERSION 2.6.1
     HOMEPAGE_URL "https://github.com/coelckers/prboom-plus")
 
+#Fluffy
+set(ENV{RTGL1_SDK_PATH} "H:/projects/codework/others-github/RayTracedGL1")
+
 # Set a default build type if none was specified
 set(default_build_type "RelWithDebInfo")
 if(NOT CMAKE_BUILD_TYPE AND NOT CMAKE_CONFIGURATION_TYPES)
@@ -82,8 +85,10 @@ if(BUILD_GL)
 endif()
 
 #find_package(SDL2 2.0.7 REQUIRED)
-    set( SDL2_LIBRARIES "${PRBOOM_EXTERNAL_FOLDER_PATH}/SDL2/SDL2.lib" )
-    set( SDL2_INCLUDE_DIR "${PRBOOM_EXTERNAL_FOLDER_PATH}/SDL2/include" )
+    #set( SDL2_LIBRARIES "${PRBOOM_EXTERNAL_FOLDER_PATH}/SDL2/SDL2.lib" )
+    set( SDL2_LIBRARIES "H:/apps/code/libcurl/vcpkg/packages/sdl2_x64-windows/lib/SDL2.lib" )
+    #set( SDL2_INCLUDE_DIR "${PRBOOM_EXTERNAL_FOLDER_PATH}/SDL2/include" )
+    set( SDL2_INCLUDE_DIR "H:/apps/code/libcurl/vcpkg/packages/sdl2_x64-windows/include/SDL2" )
     set( SDL2_INCLUDE_DIRS "${SDL2_INCLUDE_DIR}" )
     set( SDL2_FOUND TRUE )
 #
@@ -157,12 +162,18 @@ endif()
 option(WITH_VORBISFILE "Use vorbisfile if available" ON)
 if(WITH_VORBISFILE)
     # find_package(Vorbis)
-        set( VORBISFILE_LIBRARY "${PRBOOM_EXTERNAL_FOLDER_PATH}/Vorbis/libvorbisfile.lib")
-        set( VORBIS_LIBRARY     "${PRBOOM_EXTERNAL_FOLDER_PATH}/Vorbis/libvorbis.lib" )
-        set( VORBIS_INCLUDE_DIR "${PRBOOM_EXTERNAL_FOLDER_PATH}/Vorbis/include" )
+        #set( VORBISFILE_LIBRARY "${PRBOOM_EXTERNAL_FOLDER_PATH}/Vorbis/libvorbisfile.lib")
+        set( VORBISFILE_LIBRARY "H:/apps/code/libcurl/vcpkg/packages/libvorbis_x64-windows/lib/vorbisfile.lib")
+        #set( VORBIS_LIBRARY     "${PRBOOM_EXTERNAL_FOLDER_PATH}/Vorbis/libvorbis.lib" )
+        set( VORBIS_LIBRARY     "H:/apps/code/libcurl/vcpkg/packages/libvorbis_x64-windows/lib/vorbis.lib" )
+        #set( VORBIS_INCLUDE_DIR "${PRBOOM_EXTERNAL_FOLDER_PATH}/Vorbis/include" )
+        set( VORBIS_INCLUDE_DIR "H:/apps/code/libcurl/vcpkg/packages/libvorbis_x64-windows/include" )
+        
 
-        set( OGG_LIBRARIES      "${PRBOOM_EXTERNAL_FOLDER_PATH}/Ogg/libogg.lib" )
-        set( OGG_INCLUDE_DIRS   "${PRBOOM_EXTERNAL_FOLDER_PATH}/Ogg/include" )
+        #set( OGG_LIBRARIES      "${PRBOOM_EXTERNAL_FOLDER_PATH}/Ogg/libogg.lib" )
+        set( OGG_LIBRARIES      "H:/apps/code/libcurl/vcpkg/packages/libogg_x64-windows/lib/ogg.lib" )
+        #set( OGG_INCLUDE_DIRS   "${PRBOOM_EXTERNAL_FOLDER_PATH}/Ogg/include" )
+        set( OGG_INCLUDE_DIRS   "H:/apps/code/libcurl/vcpkg/packages/libogg_x64-windows/include" )
 
         set( VORBIS_LIBRARIES ${VORBISFILE_LIBRARY} ${VORBIS_LIBRARY} ${OGG_LIBRARIES} )
         set( VORBIS_INCLUDE_DIRS ${VORBIS_INCLUDE_DIR} ${OGG_INCLUDE_DIRS} )
