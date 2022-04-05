@@ -48,8 +48,10 @@
 #include "lprintf.h"
 #include "e6y.h"//e6y
 
-#define LOWERSPEED   (FRACUNIT*6)
-#define RAISESPEED   (FRACUNIT*6)
+ //Fluffy: Faster weapon switching
+#define LOWERSPEED   (FRACUNIT*6) * 4
+#define RAISESPEED   (FRACUNIT*6) * 4
+
 #define WEAPONBOTTOM (FRACUNIT*128)
 #define WEAPONTOP    (FRACUNIT*32)
 
