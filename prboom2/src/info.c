@@ -1247,7 +1247,7 @@ state_t states[NUMSTATES] = {
   {SPR_PLAY,4,2,A_FaceTarget,S_EVILMARINE_ATK10,0,0}, // S_EVILMARINE_ATK9
   {SPR_PLAY,32773,3,A_PlamaAttack,S_EVILMARINE_ATK11,0,0}, // S_EVILMARINE_ATK10
   {SPR_PLAY,4,10,NULL,S_EVILMARINE_RUN1,0,0}, // S_EVILMARINE_ATK11
-  {SPR_PLAY,4,35,A_FaceTarget,S_EVILMARINE_ROCKETATK2,0,0}, // S_EVILMARINE_ROCKETATK1
+  {SPR_PLAY,4,30,A_FaceTarget,S_EVILMARINE_ROCKETATK2,0,0}, // S_EVILMARINE_ROCKETATK1
   {SPR_PLAY,32773,10,A_CyberAttack,S_EVILMARINE_ROCKETATK3,0,0}, // S_EVILMARINE_ROCKETATK2
   {SPR_PLAY,4,10,NULL,S_EVILMARINE_RUN1,0,0}, // S_EVILMARINE_ROCKETATK3
   {SPR_PLAY,4,40,A_FaceTarget,S_EVILMARINE_BFGATK2,0,0}, // S_EVILMARINE_BFGATK1
@@ -5125,7 +5125,7 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
     8,    // reactiontime
     0,    // attacksound
     S_EVILMARINE_PAIN,    // painstate
-    25,    // painchance
+    10,    // painchance
     sfx_popain,   // painsound
     0,    // meleestate
     S_EVILMARINE_CHOOSEATK,    // missilestate
