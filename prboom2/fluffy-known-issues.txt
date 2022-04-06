@@ -1,0 +1,3 @@
+- Player is hardcoded to always be purple when RT is selected.
+- Because of new variables added to actors (bfgTarget) and player (shotgun loaded status) old savegames are not compatible.
+- Dehacked isn't compatible because of new animations I've added (will probably work again if I were to put them in a different order)
