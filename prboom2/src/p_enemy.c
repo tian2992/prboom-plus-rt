@@ -1474,6 +1474,12 @@ void A_BFGChargeUpSound(mobj_t *actor)
 {
   if (!actor->target)
     return;
+  if(!P_CheckSight(actor, actor->target)) //If evil marine doesn't have line of sight to target anymore, then cancel the attack
+  {
+    P_SetMobjState(actor, actor->info->seestate);
+    return;
+  }
+
   A_FaceTarget(actor);
   actor->bfgTargetX = actor->target->x;
   actor->bfgTargetY = actor->target->y;
@@ -1523,6 +1529,20 @@ void A_BFGAttack(mobj_t *actor)
     th->momz = (actor->bfgTargetZ - actor->z) / dist;
     P_CheckMissileSpawn (th);
   }
+}
+
+//Fluffy
+void A_RocketAttack(mobj_t *actor)
+{
+  if (!actor->target)
+    return;
+  if(!P_CheckSight(actor, actor->target)) //If evil marine doesn't have line of sight to target anymore, then cancel the attack
+  {
+    P_SetMobjState(actor, actor->info->seestate);
+    return;
+  }
+  A_FaceTarget(actor);
+  P_SpawnMissile(actor, actor->target, MT_ROCKET);
 }
 
 void A_CyberAttack(mobj_t *actor)

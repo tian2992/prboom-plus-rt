@@ -96,6 +96,7 @@ void A_Hoof(mobj_t *);
 void A_PlamaAttack(mobj_t *actor);
 void A_BFGChargeUpSound(mobj_t *actor);
 void A_BFGAttack(mobj_t *actor);
+void A_RocketAttack(mobj_t *actor);
 void A_CyberAttack(mobj_t *);
 void A_PainAttack(mobj_t *);
 void A_PainDie(mobj_t *);
