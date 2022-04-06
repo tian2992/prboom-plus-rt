@@ -1418,7 +1418,7 @@ static void P_LoadThings (int lump)
         else if(rand < 64 + 25 + 2) //Less than 1% chance to be a demon
           mt.type = 3002;
         else if(rand < 64 + 25 + 2 + 2) //Less than 1% chance to be a lost soul
-          mt.type = 3005;
+          mt.type = 3006;
         break;
       }
       case 3004: //Zombie man
@@ -1433,7 +1433,7 @@ static void P_LoadThings (int lump)
         else if(rand < 25 + 50 + 25 + 2) //Less than 1% chance to be a demon
           mt.type = 3002;
         else if(rand < 25 + 50 + 25 + 2 + 2) //Less than 1% chance to be a lost soul
-          mt.type = 3005;
+          mt.type = 3006;
         break;
       }
       case 3001: //Imp
@@ -1444,7 +1444,7 @@ static void P_LoadThings (int lump)
         else if(rand < 25 + 2) //Less than 1% chance to be a demon
           mt.type = 3002;
         else if(rand < 25 + 2 + 2) //Less than 1% chance to be a lost soul
-          mt.type = 3005;
+          mt.type = 3006;
         break;
       }
       case 2014: //Health bonus
@@ -1460,7 +1460,7 @@ static void P_LoadThings (int lump)
         else if(rand < 12 + 5 + 5 + 2) //Less than 1% chance to be a demon
           mt.type = 3002;
         else if(rand < 12 + 5 + 5 + 2 + 2) //Less than 1% chance to be a lost soul
-          mt.type = 3005;
+          mt.type = 3006;
         break;
       }
       case 15: //Player corpse
