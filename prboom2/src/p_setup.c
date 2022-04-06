@@ -57,6 +57,7 @@
 #include "g_overflow.h"
 #include "am_map.h"
 #include "e6y.h"//e6y
+#include "m_random.h" //Fluffy
 
 #include "config.h"
 #ifdef HAVE_LIBZ
@@ -1403,6 +1404,66 @@ static void P_LoadThings (int lump)
       // Replace with a Former Human instead.
       if (bfgedition && singleplayer && mt.type == 84)
         mt.type = 3004;
+
+      //Fluffy: Replace certain enemies with evil marines
+      switch(mt.type)
+      {
+      case 9: //Possessed shotgun guy
+      {
+        int rand = P_Random(pr_sposattack);
+        if(rand < 85) //About 33% chance to be an evil marine
+          mt.type = MT_EVILMARINE;
+        else if(rand < 64 + 25) //About 10% chance to be an imp
+          mt.type = 3001;
+        else if(rand < 64 + 25 + 2) //Less than 1% chance to be a demon
+          mt.type = 3002;
+        else if(rand < 64 + 25 + 2 + 2) //Less than 1% chance to be a lost soul
+          mt.type = 3005;
+        break;
+      }
+      case 3004: //Zombie man
+      {
+        int rand = P_Random(pr_sposattack);
+        if(rand < 25) //About 10% chance to be a possessed shotgun guy
+          mt.type = 9;
+        else if(rand < 25 + 50) //About 20% chance to be an imp
+          mt.type = 3001;
+        else if(rand < 25 + 50 + 25) //About 10% chance to be an evil marine
+          mt.type = MT_EVILMARINE;
+        else if(rand < 25 + 50 + 25 + 2) //Less than 1% chance to be a demon
+          mt.type = 3002;
+        else if(rand < 25 + 50 + 25 + 2 + 2) //Less than 1% chance to be a lost soul
+          mt.type = 3005;
+        break;
+      }
+      case 3001: //Imp
+      {
+        int rand = P_Random(pr_sposattack);
+        if(rand < 25) //About 10% chance to be an evil marine
+          mt.type = MT_EVILMARINE;
+        else if(rand < 25 + 2) //Less than 1% chance to be a demon
+          mt.type = 3002;
+        else if(rand < 25 + 2 + 2) //Less than 1% chance to be a lost soul
+          mt.type = 3005;
+        break;
+      }
+      case 2014: //Health bonus
+      case 2015: //Armor bonus
+      {
+        int rand = P_Random(pr_sposattack);
+        if(rand < 12) //About 5% chance to be a zombieman
+          mt.type = 3004;
+        else if(rand < 12 + 5) //About 2% chance to be a possessed shotgun guy
+          mt.type = 9;
+        else if(rand < 12 + 5 + 5) //About 2% chance to be an imp
+          mt.type = 3001;
+        else if(rand < 12 + 5 + 5 + 2) //Less than 1% chance to be a demon
+          mt.type = 3002;
+        else if(rand < 12 + 5 + 5 + 2 + 2) //Less than 1% chance to be a lost soul
+          mt.type = 3005;
+        break;
+      }
+      }
 
       // Do spawn all other stuff.
       mobj = P_SpawnMapThing(&mt, i);
