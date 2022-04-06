@@ -374,6 +374,11 @@ typedef struct mobj_s
 
     fixed_t             bloodcolor; // [FG] renamed from "pad", now used to track the thing's blood color
 
+    //Fluffy: This is used by evil marines when firing their BFG (they lock onto a target position as the start of charge-up)
+    fixed_t bfgTargetX;
+    fixed_t bfgTargetY;
+    fixed_t bfgTargetZ;
+
     // SEE WARNING ABOVE ABOUT POINTER FIELDS!!!
 } mobj_t;
 

@@ -31,6 +31,7 @@
 #include "v_video.h"
 #include "w_wad.h"
 
+static BOOL currentlyHandlingPlayerTexture = 0; //Fluffy
 
 static struct
 {
@@ -411,6 +412,25 @@ static void DT_AddPatchToTexture_UnTranslated(uint8_t *buffer, const rpatch_t *p
             buffer[pos + 0] = playpal[source[j] * 3 + 0];
             buffer[pos + 1] = playpal[source[j] * 3 + 1];
             buffer[pos + 2] = playpal[source[j] * 3 + 2];
+
+            //Fluffy: Give player sprite a custom colour
+            if(currentlyHandlingPlayerTexture)
+            {
+#define MIN_R 2
+#define MAX_R 112
+#define MIN_G 2
+#define MAX_G 2
+#define MIN_B 2
+#define MAX_B 112
+#define FIRSTGREEN 112
+#define LASTGREEN 127
+              if(source[j] >= FIRSTGREEN && source[j] <= LASTGREEN)
+              {
+                buffer[pos + 0] = MIN_R + (LASTGREEN - source[j]) * ((MAX_R - MIN_R) / ((LASTGREEN - FIRSTGREEN) + 1));
+                buffer[pos + 1] = MIN_G + (LASTGREEN - source[j]) * ((MAX_G - MIN_G) / ((LASTGREEN - FIRSTGREEN) + 1));
+                buffer[pos + 2] = MIN_B + (LASTGREEN - source[j]) * ((MAX_B - MIN_B) / ((LASTGREEN - FIRSTGREEN) + 1));
+              }
+            }
           }
           buffer[pos + 3] = 255;
         }
@@ -580,7 +600,15 @@ const rt_texture_t *RT_Texture_GetFromPatchLump(int lump)
 
   uint8_t *buffer = malloc(texture_buffer_size);
   memset(buffer, 0, texture_buffer_size);
+
+  //Fluffy
+  if(lumpinfo[lump].name[0] == 'P' && lumpinfo[lump].name[1] == 'L' && lumpinfo[lump].name[2] == 'A' && lumpinfo[lump].name[3] == 'Y')
+    currentlyHandlingPlayerTexture = 1;
+
   DT_AddPatchToTexture(buffer, patch);
+  
+  currentlyHandlingPlayerTexture = 0; //Fluffy
+
   R_UnlockPatchNum(lump);
 
 

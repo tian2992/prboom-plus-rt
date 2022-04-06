@@ -954,6 +954,11 @@ mobj_t* P_SpawnMobj(fixed_t x,fixed_t y,fixed_t z,mobjtype_t type)
   P_AddThinker (&mobj->thinker);
   if (!((mobj->flags ^ MF_COUNTKILL) & (MF_FRIEND | MF_COUNTKILL)))
     totallive++;
+
+  //Fluffy: Define colours for evil marines (this doesn't work for RT rendering mode, sad face!)
+  if (mobj->type == MT_EVILMARINE)
+    mobj->flags |= ((M_Random()>>5)+1)<<MF_TRANSSHIFT;
+
   return mobj;
 }
 

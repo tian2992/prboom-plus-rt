@@ -1268,6 +1268,19 @@ void A_Chase(mobj_t *actor)
     S_StartSound(actor, actor->info->activesound);
 }
 
+//Fluffy
+void A_EvilMarine_ChooseAttack(mobj_t *actor)
+{
+  int rand = P_Random(pr_sposattack);
+
+  if(rand < 25) //10% chance to fire BFG
+    P_SetMobjState(actor, S_EVILMARINE_BFGATK1);
+  else if(rand < 200) //68% chance to fire plasma
+    P_SetMobjState(actor, S_EVILMARINE_ATK1);
+  else //21% chance to fire rocket
+    P_SetMobjState(actor, S_EVILMARINE_ROCKETATK1);
+}
+
 //
 // A_FaceTarget
 //
@@ -1445,6 +1458,71 @@ void A_HeadAttack(mobj_t *actor)
       return;
     }
   P_SpawnMissile(actor, actor->target, MT_HEADSHOT);  // launch a missile
+}
+
+//Fluffy
+void A_PlamaAttack(mobj_t *actor)
+{
+  if (!actor->target)
+    return;
+  A_FaceTarget(actor);
+  P_SpawnMissile(actor, actor->target, MT_PLASMA);
+}
+
+//Fluffy
+void A_BFGChargeUpSound(mobj_t *actor)
+{
+  if (!actor->target)
+    return;
+  A_FaceTarget(actor);
+  actor->bfgTargetX = actor->target->x;
+  actor->bfgTargetY = actor->target->y;
+  actor->bfgTargetZ = actor->target->z;
+  S_StartSound(actor, sfx_bfg);
+}
+
+//Fluffy
+void A_BFGAttack(mobj_t *actor)
+{
+  if (!actor->target)
+    return;
+
+  //Following is based on P_SpawnMissile() function but altered so it fires toward actor->bfgTarget rather than actor->target
+  {
+    mobj_t* th;
+    angle_t an;
+    int     dist;
+
+    th = P_SpawnMobj (actor->x,actor->y,actor->z + 4*8*FRACUNIT,MT_BFG);
+
+    if (th->info->seesound)
+      S_StartSound (th, th->info->seesound);
+
+    P_SetTarget(&th->target, actor);    // where it came from
+    an = R_PointToAngle2 (actor->x, actor->y, actor->bfgTargetX, actor->bfgTargetY);
+
+    // fuzzy player
+
+    if (actor->target->flags & MF_SHADOW)
+    {  // killough 5/5/98: remove dependence on order of evaluation:
+      int t = P_Random(pr_shadow);
+      an += (t - P_Random(pr_shadow))<<20;
+    }
+
+    th->angle = an;
+    an >>= ANGLETOFINESHIFT;
+    th->momx = FixedMul (th->info->speed, finecosine[an]);
+    th->momy = FixedMul (th->info->speed, finesine[an]);
+
+    dist = P_AproxDistance (actor->bfgTargetX - actor->x, actor->bfgTargetY - actor->y);
+    dist = dist / th->info->speed;
+
+    if (dist < 1)
+      dist = 1;
+
+    th->momz = (actor->bfgTargetZ - actor->z) / dist;
+    P_CheckMissileSpawn (th);
+  }
 }
 
 void A_CyberAttack(mobj_t *actor)

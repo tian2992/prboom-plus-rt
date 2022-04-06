@@ -482,10 +482,16 @@ void RT_AddSprite(int sectornum, mobj_t *thing)
   // e6y
   // if the sprite is below the floor, and it's not a hanger/floater/missile, 
   // and it's not a fully dead corpse, move it up
+  BOOL moveSpriteUp = 0;
   if ((gl_spriteclip != spriteclip_const) &&
       (sprite.y2 < 0) && (sprite.y2 >= (float)(-gl_spriteclip_threshold_f)) &&
       !(thing->flags & (MF_SPAWNCEILING | MF_FLOAT | MF_MISSILE | MF_NOGRAVITY)) &&
       ((gl_spriteclip == spriteclip_always) || !((thing->flags & MF_CORPSE) && thing->tics == -1)))
+    moveSpriteUp = 1;
+  else if(thing->type == MT_EVILMARINE) //Fluffy: Player sprite looks bad after dying unless we move sprite up
+    moveSpriteUp = 1;
+
+  if(moveSpriteUp)
   {
     sprite.y1 -= sprite.y2;
     sprite.y2 = 0.0f;
