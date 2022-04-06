@@ -1147,6 +1147,10 @@ static void ST_initData(void)
   for (i=0;i<NUMWEAPONS;i++)
     oldweaponsowned[i] = plyr->weaponowned[i];
 
+  //Fluffy: Init shotgun loaded states
+  plyr->shotgunLoaded = plyr->weaponowned[wp_shotgun];
+  plyr->superShotgunLoaded = plyr->weaponowned[wp_supershotgun];
+
   for (i=0;i<3;i++)
     keyboxes[i] = -1;
 
