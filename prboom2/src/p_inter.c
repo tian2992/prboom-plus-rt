@@ -815,26 +815,26 @@ static void P_KillMobj(mobj_t *source, mobj_t *target)
   if(target->type == MT_EVILMARINE) //Fluffy: It's random what evil marines drop
   {
     int rand = P_Random(pr_sposattack);
-    if(rand < 25)
+    if(rand < 25 * 2)
       item = MT_CLIP;
-    else if(rand < 25 * 2)
-      item = MT_MISC22; //4 shotgun shells
-    else if(rand < 25 * 3)
-      item = MT_MISC20; //Small energy cell pack
     else if(rand < 25 * 4)
-      item = MT_MISC17; //Box of bullets
-    else if(rand < 25 * 5)
-      item = MT_MISC23; //Box of shotgun shells
+      item = MT_MISC22; //4 shotgun shells
     else if(rand < 25 * 6)
       item = MT_MISC10; //Stimpack
-    else if(rand < 25 * 7)
-      item = MT_MISC18; //Rocket
     else if(rand < 25 * 8)
+      item = MT_MISC23; //Box of shotgun shells
+    else if(rand < (25 * 8) + (9 * 1))
+      item = MT_MISC17; //Box of bullets
+    else if(rand < (25 * 8) + (9 * 2))
+      item = MT_MISC20; //Small energy cell pack
+    else if(rand < (25 * 8) + (9 * 3))
+      item = MT_MISC11; //Medikt
+    else if(rand < (25 * 8) + (9 * 4))
       item = MT_MISC3; //Armour bonus
-    else if(rand < 25 * 9)
+    else if(rand < (25 * 8) + (9 * 5))
       item = MT_MISC2; //Health bonus
     else
-      item = MT_MISC11; //Medikt
+      item = MT_MISC18; //Rocket
   }
   else if (target->info->droppeditem != MT_NULL)
   {
