@@ -5119,7 +5119,7 @@ mobjinfo_t mobjinfo[NUMMOBJTYPES] = {
   {   // MT_EVILMARINE
     146,    // doomednum
     S_EVILMARINE_STND,    // spawnstate
-    105,   // spawnhealth
+    115,   // spawnhealth
     S_EVILMARINE_RUN1,    // seestate
     sfx_posit2,   // seesound
     8,    // reactiontime
