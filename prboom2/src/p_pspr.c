@@ -72,7 +72,6 @@
 #endif
 
 //Fluffy
-static BOOL isShotgunCocked = 1;
 int recoilOffsetX = 0;
 int recoilOffsetY = 0;
 static int targetRecoilOffsetX = 0;
@@ -436,7 +435,8 @@ void A_WeaponReady(player_t *player, pspdef_t *psp)
 void A_CockingShotgun(player_t *player, pspdef_t *psp)
 {
   if(ChangeToWeaponIfPending(player))
-    S_StopSound(player->mo);
+    if(player->readyweapon == wp_shotgun)
+      S_StopSound(player->mo);
 }
 
 //
@@ -451,7 +451,9 @@ void A_ReFire(player_t *player, pspdef_t *psp)
 
   //Fluffy
   if(player->readyweapon == wp_shotgun)
-    isShotgunCocked = 1;
+    player->shotgunLoaded = 1;
+  else if(player->readyweapon == wp_supershotgun)
+    player->superShotgunLoaded = 1;
 
   // check for fire
   //  (if a weaponchange is pending, let it go through instead)
@@ -481,6 +483,9 @@ void A_CheckReload(player_t *player, pspdef_t *psp)
      * for us later on. */
     P_SetPsprite(player,ps_weapon,weaponinfo[player->readyweapon].downstate);
   }
+
+  //Fluffy
+  A_CockingShotgun(player, psp);
 }
 
 //
@@ -546,10 +551,14 @@ void A_Raise(player_t *player, pspdef_t *psp)
   newstate = weaponinfo[player->readyweapon].readystate;
 
   //Fluffy
-  if(player->readyweapon == wp_shotgun && isShotgunCocked == 0) //If we're swapping to a shotgun and the shotgun isn't cocked, then jump to the start of the cocking animation
+  if(player->readyweapon == wp_shotgun && player->shotgunLoaded == 0) //If we're swapping to a shotgun and the shotgun isn't cocked, then jump to the start of the cocking animation
   {
     P_SetPsprite(player, ps_weapon, S_SGUN3);
     S_StartSound(player->mo, sfx_sgcock);
+  }
+  else if(player->readyweapon == wp_supershotgun && player->superShotgunLoaded == 0)
+  {
+    P_SetPsprite(player, ps_weapon, S_DSGUN3);
   }
   else
     P_SetPsprite(player, ps_weapon, newstate);
@@ -889,7 +898,7 @@ void A_FireShotgun(player_t *player, pspdef_t *psp)
   int i;
 
   //Fluffy
-  isShotgunCocked = 0;
+  player->shotgunLoaded = 0;
 
   CHECK_WEAPON_CODEPOINTER("A_FireShotgun", player);
 
@@ -916,6 +925,9 @@ void A_FireShotgun(player_t *player, pspdef_t *psp)
 void A_FireShotgun2(player_t *player, pspdef_t *psp)
 {
   int i;
+
+  //Fluffy
+  player->superShotgunLoaded = 0;
 
   CHECK_WEAPON_CODEPOINTER("A_FireShotgun2", player);
 
