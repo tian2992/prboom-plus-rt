@@ -1413,11 +1413,11 @@ static void P_LoadThings (int lump)
         int rand = P_Random(pr_sposattack);
         if(rand < 85) //About 33% chance to be an evil marine
           mt.type = MT_EVILMARINE;
-        else if(rand < 64 + 25) //About 10% chance to be an imp
+        else if(rand < 85 + 25) //About 10% chance to be an imp
           mt.type = 3001;
-        else if(rand < 64 + 25 + 2) //Less than 1% chance to be a demon
+        else if(rand < 85 + 25 + 2) //Less than 1% chance to be a demon
           mt.type = 3002;
-        else if(rand < 64 + 25 + 2 + 2) //Less than 1% chance to be a lost soul
+        else if(rand < 85 + 25 + 2 + 2) //Less than 1% chance to be a lost soul
           mt.type = 3006;
         break;
       }
