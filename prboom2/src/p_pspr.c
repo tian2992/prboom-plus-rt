@@ -434,9 +434,7 @@ void A_WeaponReady(player_t *player, pspdef_t *psp)
 //Fluffy
 void A_CockingShotgun(player_t *player, pspdef_t *psp)
 {
-  if(ChangeToWeaponIfPending(player))
-    if(player->readyweapon == wp_shotgun)
-      S_StopSound(player->mo);
+  ChangeToWeaponIfPending(player);
 }
 
 //
@@ -519,6 +517,11 @@ void A_Lower(player_t *player, pspdef_t *psp)
       P_SetPsprite(player,  ps_weapon, S_NULL);
       return;
     }
+
+
+  //Fluffy: In case we're pumping shotgun, make sure that audio stops here
+  if(player->readyweapon == wp_shotgun)
+    S_StopSound(player->mo);
 
    // haleyjd 03/28/10: do not assume pendingweapon is valid
    // e6y: probably for future complevels
