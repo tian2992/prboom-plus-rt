@@ -1463,6 +1463,11 @@ static void P_LoadThings (int lump)
           mt.type = 3005;
         break;
       }
+      case 15: //Player corpse
+      {
+        mt.type = 3004; //Zombieman
+        break;
+      }
       }
 
       // Do spawn all other stuff.
