@@ -49,8 +49,8 @@
 #include "e6y.h"//e6y
 
  //Fluffy: Faster weapon switching
-#define LOWERSPEED   (FRACUNIT*6) * 4
-#define RAISESPEED   (FRACUNIT*6) * 4
+#define LOWERSPEED   (FRACUNIT*6) * 3
+#define RAISESPEED   (FRACUNIT*6) * 3
 
 #define WEAPONBOTTOM (FRACUNIT*128)
 #define WEAPONTOP    (FRACUNIT*32)
