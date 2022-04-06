@@ -2813,7 +2813,7 @@ void G_DoNewGame (void)
   walkcamera.type=0; //e6y
 
 #if RT_CUSTOM_MENU
-  if (V_GetMode() == VID_MODERT)
+  /*if (V_GetMode() == VID_MODERT)
   {
     const char *hint_text = RT_GetFlashlightHintString(key_rt_flashlight);
 
@@ -2824,7 +2824,7 @@ void G_DoNewGame (void)
     {
       SetCustomMessage(consoleplayer, hint_text, ticks_startdelay + ticks * i, ticks + 1, i % 2 ? CR_WHITE : CR_ORANGE, i == 0 || i == 2 ? sfx_tink : sfx_None);
     }
-  }
+  }*/
 #endif
 }
 
