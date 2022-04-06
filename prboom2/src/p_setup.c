@@ -1457,9 +1457,7 @@ static void P_LoadThings (int lump)
           mt.type = 9;
         else if(rand < 12 + 5 + 5) //About 2% chance to be an imp
           mt.type = 3001;
-        else if(rand < 12 + 5 + 5 + 2) //Less than 1% chance to be a demon
-          mt.type = 3002;
-        else if(rand < 12 + 5 + 5 + 2 + 2) //Less than 1% chance to be a lost soul
+        else if(rand < 12 + 5 + 5 + 2) //Less than 1% chance to be a lost soul
           mt.type = 3006;
         break;
       }
