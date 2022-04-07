@@ -120,7 +120,7 @@ const char *sprnames[NUMSPRITES+1] = {
 // parts where frame rewiring is done for more details and the
 // extended way a BEX file can handle this.
 
-state_t states[NUMSTATES] = {
+state_t states[NUMSTATES_WITHNEWSTATES] = {
   {SPR_TROO,0,-1,NULL,S_NULL,0,0},  // S_NULL
   {SPR_SHTG,4,0,A_Light0,S_NULL,0,0}, // S_LIGHTDONE
   {SPR_PUNG,0,1,A_WeaponReady,S_PUNCH,0,0}, // S_PUNCH
@@ -1223,7 +1223,10 @@ state_t states[NUMSTATES] = {
   {SPR_PLAY,20,5,NULL,S_PLAY_GDIE8,0,0},        // S_PLAY_GDIE7
   {SPR_PLAY,21,5,NULL,S_PLAY_GDIE9,0,0},        // S_PLAY_GDIE8
   {SPR_PLAY,22,-1,NULL,S_NULL,0,0},             // S_PLAY_GDIE9
+};
 
+state_t newStates[NEWSTATES] = 
+{
   //Fluffy: Evil marine frames
   {SPR_PLAY,0,10,A_Look,S_EVILMARINE_STND2,0,0},  // S_EVILMARINE_STND
   {SPR_PLAY,1,10,A_Look,S_EVILMARINE_STND,0,0}, // S_EVILMARINE_STND2

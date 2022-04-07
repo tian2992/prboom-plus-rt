@@ -1424,6 +1424,9 @@ void D_BuildBEXTables(void)
 {
    int i;
 
+   //Fluffy: Move our new animation states into a part of the array that's never touched by dehacked modification
+   memcpy(&states[NUMSTATES + 1], newStates, sizeof(state_t) * NEWSTATES);
+
    // moved from ProcessDehFile, then we don't need the static int i
    for (i = 0; i < EXTRASTATES; i++)  // remember what they start as for deh xref
      deh_codeptr[i] = states[i].action;

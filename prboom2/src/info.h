@@ -1270,6 +1270,9 @@ typedef enum
   S_PLAY_GDIE8,
   S_PLAY_GDIE9,
 
+  EXTRASTATES = 1089, // extra dehacked states
+  NUMSTATES = 4000,  /* Counter of how many there are */
+
   //Fluffy: Evil marine
   S_EVILMARINE_STND,
   S_EVILMARINE_STND2,
@@ -1326,8 +1329,7 @@ typedef enum
   S_EVILMARINE_RAISE6,
   S_EVILMARINE_RAISE7,
 
-  EXTRASTATES = 1123, // extra dehacked states //Fluffy: Changed this from 1089 so we can fit the new evil marine frames. This probably breaks dehacked stuff
-  NUMSTATES = 4000  /* Counter of how many there are */
+  NUMSTATES_WITHNEWSTATES,
 
 } statenum_t;
 
@@ -1346,8 +1348,12 @@ typedef struct
 } state_t;
 
 /* these are in info.c */
-extern state_t  states[NUMSTATES];
+extern state_t  states[NUMSTATES_WITHNEWSTATES];
 extern const char *sprnames[]; /* 1/17/98 killough - CPhipps - const */
+
+//Fluffy
+#define NEWSTATES ((NUMSTATES_WITHNEWSTATES - NUMSTATES) - 1)
+extern state_t  newStates[NEWSTATES];
 
 /********************************************************************
  * Thing enumeration -- must match info.c                           *
