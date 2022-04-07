@@ -1273,12 +1273,16 @@ void A_EvilMarine_ChooseAttack(mobj_t *actor)
 {
   int rand = P_Random(pr_sposattack);
 
+  int dist = 0;
+  if(actor->target)
+    dist = P_AproxDistance(actor->target->x - actor->x, actor->target->y - actor->y);
+
   if(rand < 25) //10% chance to fire BFG
     P_SetMobjState(actor, S_EVILMARINE_BFGATK1);
-  else if(rand < 200) //68% chance to fire plasma
-    P_SetMobjState(actor, S_EVILMARINE_ATK1);
-  else //21% chance to fire rocket
+  else if(rand < 25 + 54 && dist > 50000000) //21% chance to fire rocket (only fire rocket if target is far-ish away)
     P_SetMobjState(actor, S_EVILMARINE_ROCKETATK1);
+  else //68% chance to fire plasma
+    P_SetMobjState(actor, S_EVILMARINE_ATK1);
 }
 
 //
