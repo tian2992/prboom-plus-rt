@@ -1279,9 +1279,9 @@ void A_EvilMarine_ChooseAttack(mobj_t *actor)
 
   if(rand < 25) //10% chance to fire BFG
     P_SetMobjState(actor, S_EVILMARINE_BFGATK1);
-  else if(rand < 25 + 54 && dist > 50000000) //21% chance to fire rocket (only fire rocket if target is far-ish away)
+  else if(dist > 40000000) //Fire rockets at long range
     P_SetMobjState(actor, S_EVILMARINE_ROCKETATK1);
-  else //68% chance to fire plasma
+  else //Fire plasma rifle at short range
     P_SetMobjState(actor, S_EVILMARINE_ATK1);
 }
 
