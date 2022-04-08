@@ -414,7 +414,7 @@ static void DT_AddPatchToTexture_UnTranslated(uint8_t *buffer, const rpatch_t *p
             buffer[pos + 2] = playpal[source[j] * 3 + 2];
 
             //Fluffy: Give player sprite a custom colour
-            if(currentlyHandlingPlayerTexture)
+            if(currentlyHandlingPlayerTexture & M_CheckParm("-normalmonsters") == 0)
             {
 #define MIN_R 2
 #define MAX_R 112
