@@ -3920,7 +3920,7 @@ static const char *RT_options_fsr[] =
 static const char *RT_options_renderscale[] =
 {
   "As resolution",
-  "320x200 (CRT)",
+  "200p",
   "480p",
   "600p",
   "720p",
