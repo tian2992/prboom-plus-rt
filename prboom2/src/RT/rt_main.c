@@ -224,10 +224,9 @@ static RgExtent2D GetScaledResolution(rt_settings_renderscale_e renderscale)
   {
     case RT_SETTINGS_RENDERSCALE_320x200:
     {
-      // double the resolution, to simulate interlacing
-      /*RgExtent2D original_doom = { 320 * 2, 200 * 2 };
-      return original_doom;*/
-      y = 200; //Fluffy: 200p now means 200p
+      //Fluffy: 200p now means 200p
+      RgExtent2D original_doom = { 320, 200 };
+      return original_doom;
       break;
     }
     case RT_SETTINGS_RENDERSCALE_480:   y = 480; break;
